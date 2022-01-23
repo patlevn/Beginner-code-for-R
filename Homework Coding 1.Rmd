@@ -1,0 +1,154 @@
+---
+title: "Homework Coding 1"
+author: "KhoaLe"
+date: "1/21/2022"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+tinytex::install_tinytex()
+
+```
+
+# Question 3.4.2 
+Business Card 
+```{r}
+#######################################
+#######################################
+# Full name: Khoa Le
+# Marketing Analyst | Digital Marketing
+# https://github.com/patlevn
+# Boston, Massachusetts
+# Email: dangkhoale21@gmail.com
+######################################
+######################################
+```
+
+# Question 3.4.3
+```{r}
+# Installing packages from CRAN
+##install.packages("neuralnet")
+
+# Reading library 
+library("neuralnet")
+
+# Getting help 
+?neuralnet
+```
+
+Example for neuralnet:
+```{r}
+# Creating data
+data1 <- c(10,20,30,40,50,60)
+data2 <- c(20,40,60,80,80,20)
+data3 <- c(0,1,1,1,1,1)
+
+# Using dataframe for combining
+my_df <- data.frame(data1, data2, data3)
+
+# Neuralnet function to fit neural network 
+neu_data <- neuralnet(data3~data1+data2, data=my_df, hidden=3,act.fct="logistic"
+                      ,linear.output = FALSE)
+```
+Result (Appendix 1)
+
+Meaning of argument: 
+
+formula (data3~data1+data2: A implementing this method of the model that has 
+to be fitted.
+
+data = my_df: the variables stated in formula are stored in a dataframe.
+Hidden=3: the number of hidden neurons (vertices) in each layer is specified 
+by a vector of numbers.
+
+act.fct: the output of the cross product of the covariate or neurons and 
+the weights is smoothed using this differentiable function.
+
+linear.output: logical. Set linear output to TRUE if act.fct should not be 
+applied to the output neurons, otherwise to FALSE.
+
+# Question 3.4.8
+
+**(a)**
+Transformmatrix function for Exercise 7 from chapter 2
+```{r}
+#Creating matrix table
+my_matrix <- matrix(c(10,11,9,15,19,52,19,7,10,22,28,40,6,99,33,35,26,5,87,91,0,
+                      12,16,81,200),nrow=5,ncol=5,byrow=TRUE)
+
+#Creating a UDF function
+transformmatrix <- function(x){
+  try(mean_diag <- mean(diag(x)))
+  try(med_diag <- median(diag(x)))
+  try(print(c(mean_diag,med_diag)))
+} #closing  
+
+# Print transformmatrix 
+transformmatrix(my_matrix)
+```
+After applying transformmatrix function to the given matrix, we get two vectors
+with values of 64.4 (mean) and 19.0 (median)
+
+**(b)**
+Transformmatrix from an example chapter 2.1
+```{r}
+# Creating matrix table for chapter 2.1
+my_matrix2 <- matrix(c(1,2,3,4,5,6,7,8,9),nrow=3,ncol=3,byrow=TRUE)
+
+# Printing transformmatrix
+transformmatrix(my_matrix2)
+
+```
+After applying transformmatrix function to the given matrix, we get two vectors
+with values of 5 (mean) and 5 (median)
+
+# Question 4.4.10
+
+```{r}
+# Importing required library 
+library(MASS)
+
+# Creating table for the data
+my_data <- airquality
+```
+This data frame has 153 observations and 6 variables (Appendix 2)
+
+```{r}
+# Define function 
+# For loop over the dataframe to remove NA values
+my_func <- function(my_data, col_idx){
+  for(i in col_idx){
+    new_df <- my_data[-which(is.na(my_data[,i])),]
+    return(new_df)
+  }
+} #closing loop
+```
+
+```{r}
+# Test function
+df_test <- my_func(my_data,2)
+```
+This test data frame has 146 observations and 6 variables (Appendix 3)
+
+Example for UDF (Appendix 4):
+```{r}
+# Creaing dataframe
+new_idx <- c(1,1,2)
+# Test function
+df_newUDF <- my_func(my_data,new_idx)
+```
+
+Appendix: 
+
+Appendix 1
+![neu_data](/Users/khoale/Desktop/1.png)
+Appendix 2: 
+![my_data](/Users/khoale/Desktop/2.png)
+Appendix 3:
+![df_test](/Users/khoale/Desktop/3.png)
+Appendix 4: 
+![example_udf](/Users/khoale/Desktop/Screen Shot 2022-01-22 at 11.01.11 PM.png)
